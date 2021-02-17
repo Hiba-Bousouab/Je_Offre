@@ -1,7 +1,3 @@
-/*==============================================================*/
-/* Nom de SGBD :  MySQL 5.0                                     */
-/* Date de création :  16/02/2021 08:17:49                      */
-/*==============================================================*/
 
 
 drop table if exists Cities;
@@ -16,9 +12,6 @@ drop table if exists Ratings;
 
 drop table if exists User;
 
-/*==============================================================*/
-/* Table : Cities                                               */
-/*==============================================================*/
 create table Cities
 (
     city_id              int not null,
@@ -26,9 +19,7 @@ create table Cities
     primary key (city_id)
 );
 
-/*==============================================================*/
-/* Table : Images                                               */
-/*==============================================================*/
+
 create table Images
 (
     imageId              bigint not null AUTO_INCREMENT,
@@ -37,9 +28,7 @@ create table Images
     primary key (imageId)
 );
 
-/*==============================================================*/
-/* Table : Messages                                             */
-/*==============================================================*/
+
 create table Messages
 (
     sender_id_user       varchar(254) not null,
@@ -47,12 +36,10 @@ create table Messages
     id_message           bigint not null AUTO_INCREMENT,
     dateMessage          datetime,
     message              varchar(254),
-    primary key (sender_id_user, idUser, id_message)
+    primary key (id_message)
 );
 
-/*==============================================================*/
-/* Table : Offer                                                */
-/*==============================================================*/
+
 create table Offer
 (
     offerId              bigint not null AUTO_INCREMENT,
@@ -109,7 +96,7 @@ alter table Messages add constraint FK_contact2 foreign key (sender_id_user)
 alter table Ratings add constraint FK_evaluating foreign key (offerId)
     references Offer (offerId) on delete restrict on update restrict;
 
-alter table Ratings add constraint FK_evaluating foreign key (idUser)
+alter table Ratings add constraint FK_evaluating2 foreign key (idUser)
     references User (idUser) on delete restrict on update restrict;
 
 alter table User add constraint FK_offering foreign key (offerId)
