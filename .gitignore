@@ -1,0 +1,15 @@
+*.classpath
+*.project
+*.settings
+/bin/*
+/target/*
+.mvn
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+.idea/
+*.iml
