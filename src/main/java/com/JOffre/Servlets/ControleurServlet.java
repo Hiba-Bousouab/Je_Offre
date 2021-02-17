@@ -1,4 +1,4 @@
-package com.JOffre.Web;
+package com.JOffre.Servlets;
 
 import com.JOffre.Model.OffreModel;
 import com.JOffre.metier.OffreMetier;
