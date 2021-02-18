@@ -1,5 +1,7 @@
 package com.JOffre.dao;
 
+import com.JOffre.Model.Category;
+import com.JOffre.Model.City;
 import com.JOffre.Model.Offre;
 import static com.JOffre.daoUtil.Util.initPreparedStatement;
 import static com.JOffre.daoUtil.Util.closeResources;
@@ -91,6 +93,21 @@ public class OffreDaoImpl implements IOffreDao{
 
     @Override
     public Offre delete(Long id) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Offre> getOffres(City city) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Offre> getOffres(Category category) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Offre> getOffres(City city, Category category) throws DaoException {
         return null;
     }
 
