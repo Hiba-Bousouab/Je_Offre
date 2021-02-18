@@ -69,6 +69,9 @@ public class DaoFactory {
     public IOffreDao getOfferDao() {
         return new OffreDaoImpl(this);
     }
+//    public IUserDao getUserDao() {
+//        return new UserDaoImpl(this);
+//    }
 
 
 }

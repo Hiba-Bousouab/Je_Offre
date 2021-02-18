@@ -3,9 +3,7 @@ package com.JOffre.dao;
 import com.JOffre.Model.Category;
 import com.JOffre.Model.City;
 import com.JOffre.Model.Offre;
-import static com.JOffre.daoUtil.Util.initPreparedStatement;
-import static com.JOffre.daoUtil.Util.closeResources;
-import static com.JOffre.daoUtil.Util.mapToOffer;
+import static com.JOffre.daoUtil.Util.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +15,8 @@ public class OffreDaoImpl implements IOffreDao{
 
     private static final String SQL_INSERT = "INSERT INTO offer(idUser, title, description, date, city, category) VALUES(?,?,?,?,?,?)";
     private static final String SQL_SELECT = "SELECT offerId, idUser, title, description, date, city, category from offer where offerId = ? ";
+    private static final String SQL_UPDATE = "SELECT offerId, idUser, title, description, date, city, category from offer where offerId = ? ";
+    private static final String SQL_DELETE = "DELETE from offer where offerId = ? ";
 
     private DaoFactory          daoFactory;
     Connection connection= null;
@@ -32,7 +32,7 @@ public class OffreDaoImpl implements IOffreDao{
         ResultSet generatedValues = null;
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = initPreparedStatement( connection, SQL_INSERT, true, offer.getTitre(),offer.getDesignation(), offer.getDescription(), offer.getProprietaire(), offer.getVille(), offer.getPhoto() );
+            preparedStatement = initPreparedStatement( connection, SQL_INSERT, true, offer.getTitre());
 
             int status = preparedStatement.executeUpdate();
             if ( status == 0 ) {
@@ -42,7 +42,7 @@ public class OffreDaoImpl implements IOffreDao{
             //recuperation de l'id
             generatedValues = preparedStatement.getGeneratedKeys();
             if ( generatedValues.next() ) {
-                offer.setId( generatedValues.getLong( 1 ) );
+                offer.setOfferId( generatedValues.getLong( 1 ) );
             } else {
                 throw new DaoException("failed to create an offer, no id was generated");
             }
@@ -67,7 +67,7 @@ public class OffreDaoImpl implements IOffreDao{
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             if ( resultSet.next() ) {
-                offer = mapToOffer( resultSet );
+                offer = mapToOffer(resultSet);
             }
 
         } catch(SQLException e){
@@ -80,19 +80,61 @@ public class OffreDaoImpl implements IOffreDao{
     }
 
 
-    @Override
-    public List<Offre> OffreParMc(String mc) throws DaoException {
-        return null;
-    }
-
 
     @Override
     public Offre update(Offre offer) throws DaoException {
-        return null;
+        ResultSet generatedValues = null;
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_UPDATE, true, offer.getTitre());
+
+            int status = preparedStatement.executeUpdate();
+            if ( status == 0 ) {
+                throw new DaoException( "cannot add an offer to table" );
+            }
+
+            //recuperation de l'id
+            generatedValues = preparedStatement.getGeneratedKeys();
+            if ( generatedValues.next() ) {
+                offer.setOfferId( generatedValues.getLong( 1 ) );
+            } else {
+                throw new DaoException("failed to create an offer, no id was generated");
+            }
+        } catch(SQLException e){
+            throw new DaoException(e);
+        }
+        finally {
+            closeResources( generatedValues, preparedStatement, connection );
+        }
+        return offer;
     }
 
     @Override
     public void delete(Long id) throws DaoException {
+        ResultSet generatedValues = null;
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_DELETE, true, id);
+
+            int status = preparedStatement.executeUpdate();
+            if ( status == 0 ) {
+                throw new DaoException( "cannot add an offer to table" );
+            }
+
+            //recuperation de l'id
+            generatedValues = preparedStatement.getGeneratedKeys();
+            if ( generatedValues.next() ) {
+                offer.setOfferId( generatedValues.getLong( 1 ) );
+            } else {
+                throw new DaoException("failed to create an offer, no id was generated");
+            }
+        } catch(SQLException e){
+            throw new DaoException(e);
+        }
+        finally {
+            closeResources( generatedValues, preparedStatement, connection );
+        }
+        return offer;
     }
 
     @Override
@@ -102,11 +144,6 @@ public class OffreDaoImpl implements IOffreDao{
 
     @Override
     public List<Offre> getOffres(int category) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public List<Offre> getOffres(Category category) throws DaoException {
         return null;
     }
 

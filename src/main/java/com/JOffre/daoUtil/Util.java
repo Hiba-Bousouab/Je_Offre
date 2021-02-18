@@ -1,4 +1,5 @@
 package com.JOffre.daoUtil;
+import com.JOffre.Model.City;
 import com.JOffre.Model.Offre;
 
 
@@ -56,7 +57,22 @@ public class Util {
     }
     public static Offre mapToOffer(ResultSet resultSet)throws SQLException{
             Offre offer = new Offre();
-            offer.setOfferId( resultSet.getLong( "id" ) );
+            offer.setOfferId( resultSet.getLong( "offerId" ) );
+            offer.setTitre( resultSet.getString("title"));
+            offer.setIdUser( resultSet.getString("idUser"));
+            offer.setDescription(resultSet.getString("description"));
+            resultSet.getInt("city");
+            offer.setCity(City.CASA);
+            offer.setCity(resultSet.getObject("category"));
+            offer.setCity(resultSet.getObject("date"));
+
+            /*
+
+    private String[] photos;
+    private String userFirstName;
+    private String userLastName;
+    private Integer score;*/
+
             return offer;
     }
 }
