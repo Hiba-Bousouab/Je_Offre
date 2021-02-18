@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-
+<c:forEach var="Offre" items="${test}">
 </body>
 </html>
