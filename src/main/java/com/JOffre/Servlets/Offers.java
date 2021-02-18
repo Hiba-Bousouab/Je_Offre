@@ -10,7 +10,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "Offers", value = "/offers")
+@WebServlet(value = "/offers")
 public class Offers extends HttpServlet {
     private static final String ATT_DAO_FACTORY = "daofactory";
     private IOffreDao offers = null;
@@ -18,7 +18,6 @@ public class Offers extends HttpServlet {
     @Override
     public void init() throws ServletException{
         this.offers = ( (DaoFactory) getServletContext().getAttribute( ATT_DAO_FACTORY ) ).getOfferDao();
-
     }
 
 
