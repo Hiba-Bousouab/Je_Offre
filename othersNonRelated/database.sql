@@ -1,10 +1,8 @@
 /*==============================================================*/
 /* Nom de SGBD :  MySQL 5.0                                     */
-/* Date de crÃ©ation :  16/02/2021 08:17:49                      */
+/* Date de création :  18/02/2021 03:21:12                      */
 /*==============================================================*/
 
-
-drop table if exists Cities;
 
 drop table if exists Images;
 
@@ -16,25 +14,17 @@ drop table if exists Ratings;
 
 drop table if exists User;
 
-/*==============================================================*/
-/* Table : Cities                                               */
-/*==============================================================*/
-create table Cities
-(
-    city_id              int not null,
-    city_name            varchar(254),
-    primary key (city_id)
-);
+drop table if exists favoritize;
 
 /*==============================================================*/
 /* Table : Images                                               */
 /*==============================================================*/
 create table Images
 (
-    imageId              bigint not null AUTO_INCREMENT,
-    offerId              bigint not null,
-    pathToImage          varchar(254),
-    primary key (imageId)
+   imageId              bigint not null AUTO_INCREMENT,
+   offerId              bigint not null,
+   pathToImage          varchar(254),
+   primary key (imageId)
 );
 
 /*==============================================================*/
@@ -42,12 +32,12 @@ create table Images
 /*==============================================================*/
 create table Messages
 (
-    sender_id_user       varchar(254) not null,
-    idUser               varchar(254) not null,
-    id_message           bigint not null AUTO_INCREMENT,
-    dateMessage          datetime,
-    message              varchar(254),
-    primary key (sender_id_user, idUser, id_message)
+   sender_id_user       varchar(254) not null,
+   idUser               varchar(254) not null,
+   id_message           bigint not null AUTO_INCREMENT,
+   dateMessage          timestamp,
+   message              text,
+   primary key (id_message)
 );
 
 /*==============================================================*/
@@ -55,33 +45,25 @@ create table Messages
 /*==============================================================*/
 create table Offer
 (
-    offerId              bigint not null AUTO_INCREMENT,
-    title                varchar(254),
-    description          varchar(254),
-    date                 datetime,
-    city                 smallint,
-    primary key (offerId)
+   offerId              bigint not null AUTO_INCREMENT,
+   idUser               varchar(254),
+   title                varchar(254),
+   description          varchar(254),
+   date                 timestamp,
+   city                 smallint,
+   category             smallint,
+   primary key (offerId)
 );
-create table OffersArchive
-(
-    offerId2              bigint not null AUTO_INCREMENT,
-    title2                varchar(254),
-    description2          varchar(254),
-    date_archive                 datetime,
-    city2                 smallint,
-    primary key (offerId2)
-);
-
 
 /*==============================================================*/
 /* Table : Ratings                                              */
 /*==============================================================*/
 create table Ratings
 (
-    idUser               varchar(254) not null,
-    offerId              bigint not null,
-    rate                 int,
-    primary key (idUser, offerId)
+   idUser               varchar(254) not null,
+   offerId              bigint not null,
+   rate                 char(1),
+   primary key (idUser, offerId)
 );
 
 /*==============================================================*/
@@ -89,29 +71,44 @@ create table Ratings
 /*==============================================================*/
 create table User
 (
-    idUser               varchar(254) not null,
-    offerId              bigint not null,
-    firstName            varchar(254),
-    lastName             varchar(254),
-    primary key (idUser),
-    key AK_Identifiant_1 (idUser)
+   idUser               varchar(254) not null,
+   firstName            varchar(254),
+   lastName             varchar(254),
+   primary key (idUser),
+   key AK_Identifiant_1 (idUser)
+);
+
+/*==============================================================*/
+/* Table : favoritize                                           */
+/*==============================================================*/
+create table favoritize
+(
+   offerId              bigint not null,
+   idUser               varchar(254) not null,
+   primary key (offerId, idUser)
 );
 
 alter table Images add constraint FK_illustrate foreign key (offerId)
-    references Offer (offerId) on delete restrict on update restrict;
+      references Offer (offerId) on delete restrict on update restrict;
 
 alter table Messages add constraint FK_contact foreign key (idUser)
-    references User (idUser) on delete restrict on update restrict;
+      references User (idUser) on delete restrict on update restrict;
 
 alter table Messages add constraint FK_contact2 foreign key (sender_id_user)
-    references User (idUser) on delete restrict on update restrict;
+      references User (idUser) on delete restrict on update restrict;
+
+alter table Offer add constraint FK_offering foreign key (idUser)
+      references User (idUser) on delete restrict on update restrict;
 
 alter table Ratings add constraint FK_evaluating foreign key (offerId)
-    references Offer (offerId) on delete restrict on update restrict;
+      references Offer (offerId) on delete restrict on update restrict;
 
 alter table Ratings add constraint FK_evaluating foreign key (idUser)
-    references User (idUser) on delete restrict on update restrict;
+      references User (idUser) on delete restrict on update restrict;
 
-alter table User add constraint FK_offering foreign key (offerId)
-    references Offer (offerId) on delete restrict on update restrict;
+alter table favoritize add constraint FK_favoritize foreign key (offerId)
+      references Offer (offerId) on delete restrict on update restrict;
+
+alter table favoritize add constraint FK_favoritize foreign key (idUser)
+      references User (idUser) on delete restrict on update restrict;
 
