@@ -3,9 +3,19 @@ package com.JOffre.Model;
 import java.io.Serializable;
 
 public class User implements Serializable {
+
     private String idUser;
     private String firstName;
     private String lastName;
+    private Long[] offres;
+
+    public Long[] getOffres() {
+        return offres;
+    }
+
+    public void setOffres(Long[] offres) {
+        this.offres = offres;
+    }
 
     public String getIdUser() {
         return idUser;
@@ -30,6 +40,5 @@ public class User implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
 
 }
