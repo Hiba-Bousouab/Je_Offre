@@ -11,21 +11,37 @@ public class Offre implements Serializable {
     private String description;
     private City city;
     private Category category;
+    private String[] photos;
+    private String idUser;
+    private Integer score;
 
     public Offre(){
         super();
     }
 
-    public Offre(Long offerId, String titre, Timestamp date, String description, City city, Category category) {
-        this.offerId = offerId;
-        this.titre = titre;
-        this.date = date;
-        this.description = description;
-        this.city = city;
-        this.category = category;
+    public Integer getScore() {
+        return score;
     }
 
+    public void setScore(Integer score) {
+        this.score = score;
+    }
 
+    public String[] getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String[] photos) {
+        this.photos = photos;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
 
     public Long getOfferId() {
         return offerId;
