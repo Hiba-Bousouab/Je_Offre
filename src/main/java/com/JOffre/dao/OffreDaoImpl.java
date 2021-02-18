@@ -1,82 +1,98 @@
 package com.JOffre.dao;
 
-import com.JOffre.metier.Entities.Offre;
+import com.JOffre.beans.Offre;
+import static com.JOffre.daoUtil.Util.initPreparedStatement;
+import static com.JOffre.daoUtil.Util.closeResources;
+import static com.JOffre.daoUtil.Util.mapToOffer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class OffreDaoImpl implements IOffreDao {
+public class OffreDaoImpl implements IOffreDao{
 
-    @Override
-    public Offre save(Offre p) {
-        Connection connection=SingletonConnection.getConnection();
-            //Table name is key sensitive
-        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO Produits (TITRE,DESIGNATION,DESCRIPTION,PROPRIETAIRE,VILLE,PHOTO) VALUES(?,?,?,?,?,?)")) {
-            ps.setString(1,p.getTitre());
-            ps.setString(2,p.getDesignation());
-            ps.setString(3,p.getDescription());
-            ps.setString(4,p.getProprietaire());
-            ps.setString(5,p.getVille());
-            ps.setString(6,p.getPhoto());
-            ps.executeUpdate();
+    private static final String SQL_INSERT = "INSERT INTO offer(idUser, title, description, date, city, category) VALUES(?,?,?,?,?,?)";
+    private static final String SQL_SELECT = "SELECT offerId, idUser, title, description, date, city, category from offer where offerId = ? ";
 
-            //pour recupere le id
-            PreparedStatement ps2 = connection.prepareStatement("SELECT MAX(ID) as MAX_ID FROM PRODUITS");
-            ResultSet rs = ps2.executeQuery();
-            if(rs.next()){
-                p.setId(rs.getLong("Max_ID"));
-            }
+    private DaoFactory          daoFactory;
+    Connection connection= null;
+    PreparedStatement preparedStatement = null;
 
-            ps.close();
-            ps2.close();
-        } catch(SQLException e){
 
-        }
-        return p;
+    OffreDaoImpl( DaoFactory daoFactory ) {
+        this.daoFactory = daoFactory;
     }
 
     @Override
-    public List<Offre> OffreParMc(String mc) throws SQLException {
-        List<Offre> offres = new ArrayList<Offre>();
-        Connection connection = SingletonConnection.getConnection();
-
-        PreparedStatement ps = connection.prepareStatement("SELECT * FROM Produits WHERE DESIGNATION LIKE ?");
+    public Offre create(Offre offer) throws DaoException {
+        ResultSet generatedValues = null;
         try {
-            ps.setString(1,mc);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                Offre p = new Offre();
-                p.setId(rs.getLong("ID"));
-                p.setTitre(rs.getString("Titre"));
-                p.setDesignation(rs.getString("Designation"));
-                p.setDescription(rs.getString("Description"));
-                p.setProprietaire(rs.getString("Proprietaire"));
-                p.setVille(rs.getString("Ville"));
-                offres.add(p);
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_INSERT, true, offer.getTitre(),offer.getDesignation(), offer.getDescription(), offer.getProprietaire(), offer.getVille(), offer.getPhoto() );
+
+            int status = preparedStatement.executeUpdate();
+            if ( status == 0 ) {
+                throw new DaoException( "cannot add an offer to table" );
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+
+            //recuperation de l'id
+            generatedValues = preparedStatement.getGeneratedKeys();
+            if ( generatedValues.next() ) {
+                offer.setId( generatedValues.getLong( 1 ) );
+            } else {
+                throw new DaoException("failed to create an offer, no id was generated");
+            }
+        } catch(SQLException e){
+            throw new DaoException(e);
         }
-        return offres;
+        finally {
+            closeResources( generatedValues, preparedStatement, connection );
+        }
+        return offer;
     }
 
     @Override
-    public Offre getOffre(Long id) {
+    public Offre get(Long id) throws DaoException {
+        Offre offer = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_SELECT, false, id);
+
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if ( resultSet.next() ) {
+                offer = mapToOffer( resultSet );
+            }
+
+        } catch(SQLException e){
+            throw new DaoException(e);
+        }
+        finally {
+            closeResources( resultSet, preparedStatement, connection );
+        }
+        return offer;
+    }
+
+
+    @Override
+    public List<Offre> OffreParMc(String mc) throws DaoException {
+        return null;
+    }
+
+
+    @Override
+    public Offre update(Offre offer) throws DaoException {
         return null;
     }
 
     @Override
-    public Offre update(Offre p) {
+    public Offre delete(Long id) throws DaoException {
         return null;
     }
 
-    @Override
-    public Offre deleteOffre(Long id) {
-        return null;
-    }
 
 }

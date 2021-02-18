@@ -1,13 +1,12 @@
 package com.JOffre.dao;
-import com.JOffre.metier.Entities.Offre;
+import com.JOffre.beans.Offre;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface IOffreDao {
-    public Offre save(Offre p);
-    public List<Offre> OffreParMc(String mc) throws SQLException;
-    public Offre getOffre(Long id);
-    public Offre update(Offre p);
-    public Offre deleteOffre(Long id);
+    Offre create(Offre offer) throws DaoException;
+    List<Offre> OffreParMc(String mc) throws DaoException;
+    Offre get(Long id) throws DaoException;
+    Offre update(Offre offer) throws DaoException;
+    Offre delete(Long id) throws DaoException;
 }
