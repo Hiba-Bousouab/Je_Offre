@@ -66,7 +66,7 @@ public class DaoFactory {
     }
 
     //get your Object table model here (get the implementation)
-    public IOffreDao getUserDao() {
+    public IOffreDao getOfferDao() {
         return new OffreDaoImpl(this);
     }
 
