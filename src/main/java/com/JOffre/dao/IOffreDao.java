@@ -1,5 +1,5 @@
 package com.JOffre.dao;
-import com.JOffre.beans.Offre;
+import com.JOffre.Model.Offre;
 
 import java.util.List;
 
