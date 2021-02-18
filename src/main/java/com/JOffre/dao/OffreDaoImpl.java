@@ -92,8 +92,7 @@ public class OffreDaoImpl implements IOffreDao{
     }
 
     @Override
-    public Offre delete(Long id) throws DaoException {
-        return null;
+    public void delete(Long id) throws DaoException {
     }
 
     @Override
