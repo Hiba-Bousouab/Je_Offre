@@ -101,12 +101,22 @@ public class OffreDaoImpl implements IOffreDao{
     }
 
     @Override
+    public List<Offre> getOffres(int category) throws DaoException {
+        return null;
+    }
+
+    @Override
     public List<Offre> getOffres(Category category) throws DaoException {
         return null;
     }
 
     @Override
     public List<Offre> getOffres(City city, Category category) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Offre> searchOffers(String str) throws DaoException {
         return null;
     }
 

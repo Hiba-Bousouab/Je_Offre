@@ -12,7 +12,7 @@ public interface IOffreDao {
     void delete(Long id) throws DaoException;
 
     List<Offre> getOffres(City city) throws DaoException;
-    List<Offre> getOffres(Category category) throws DaoException;
+    List<Offre> getOffres(int category) throws DaoException;
     List<Offre> getOffres(City city, Category category) throws DaoException;
 
     //search offre
