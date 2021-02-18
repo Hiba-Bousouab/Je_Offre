@@ -8,7 +8,7 @@ public class OffreModel {
     private String ville;
     private boolean exist;
 
-    public OffreModel(){
+    private OffreModel(){
         super();
     }
 
