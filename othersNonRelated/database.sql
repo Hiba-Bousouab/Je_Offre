@@ -111,3 +111,4 @@ alter table favoritize add constraint FK_favoritize foreign key (offerId)
 alter table favoritize add constraint FK_favoritize2 foreign key (idUser)
       references User (idUser);
 
+
