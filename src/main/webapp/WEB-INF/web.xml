@@ -7,7 +7,7 @@
         <listener-class>com.JOffre.config.DaoFactoryInitialisation</listener-class>
     </listener>
 
-    //include taglibs.jsp in the head of every jsp
+    <!--include taglibs.jsp in the head of every jsp-->
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
