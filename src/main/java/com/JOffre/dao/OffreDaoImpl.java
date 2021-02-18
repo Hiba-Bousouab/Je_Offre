@@ -1,6 +1,6 @@
 package com.JOffre.dao;
 
-import com.JOffre.beans.Offre;
+import com.JOffre.Model.Offre;
 import static com.JOffre.daoUtil.Util.initPreparedStatement;
 import static com.JOffre.daoUtil.Util.closeResources;
 import static com.JOffre.daoUtil.Util.mapToOffer;

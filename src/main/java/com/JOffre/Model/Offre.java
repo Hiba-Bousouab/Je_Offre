@@ -1,8 +1,7 @@
-package com.JOffre.beans;
+package com.JOffre.Model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Locale;
 
 public class Offre implements Serializable {
 

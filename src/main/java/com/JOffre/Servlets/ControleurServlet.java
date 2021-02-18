@@ -1,6 +1,6 @@
 package com.JOffre.Servlets;
 
-import com.JOffre.Model.OffreModel;
+import com.JOffre.Model.Offre;
 import com.JOffre.metier.OffreMetier;
 
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ public class ControleurServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("mod",new OffreModel());
+        request.setAttribute("mod",new Offre());
         request.getRequestDispatcher("Vue.jsp").forward(request, response);
 
     }
@@ -32,7 +32,7 @@ public class ControleurServlet extends HttpServlet {
         String Titre = req.getParameter("Titre");
         String Description = req.getParameter("Description");
         int Date = Integer.parseInt(req.getParameter("Date"));
-        OffreModel model = new OffreModel();
+        Offre model = new Offre();
         model.setTitre(Titre);
         model.setDescription(Description);
         model.setDate(Date);

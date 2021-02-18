@@ -1,4 +1,4 @@
-<%@ page import="com.JOffre.Model.OffreModel" %><%--
+<%@ page import="com.JOffre.Model.Offre" %><%--
   Created by IntelliJ IDEA.
   User: dragon
   Date: 1/26/21

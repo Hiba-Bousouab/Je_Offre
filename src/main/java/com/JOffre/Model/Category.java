@@ -1,4 +1,4 @@
-package com.JOffre.beans;
+package com.JOffre.Model;
 
 public enum Category {
 }
