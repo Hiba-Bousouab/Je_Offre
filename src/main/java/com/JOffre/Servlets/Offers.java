@@ -1,5 +1,6 @@
 package com.JOffre.Servlets;
 
+import com.JOffre.Model.City;
 import com.JOffre.Model.Offre;
 import com.JOffre.dao.DaoFactory;
 import com.JOffre.dao.IOffreDao;
@@ -23,7 +24,8 @@ public class Offers extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        List<Offre> exemple = this.offers.getOffres(City.CASA);
+        request.setAttribute("test",exemple);
     }
 
     @Override
