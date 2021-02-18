@@ -16,5 +16,5 @@ public interface IOffreDao {
     List<Offre> getOffres(City city, Category category) throws DaoException;
 
     //search offre
-    List<Offre> OffreParMc(String mc) throws DaoException;
+    List<Offre> searchOffers(String str) throws DaoException;
 }
