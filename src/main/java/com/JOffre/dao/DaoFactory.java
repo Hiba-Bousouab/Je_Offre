@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class DaoFactory {
     //properties file constants keys (envDB is key value file)
-    private static final String PROPERTIES_FILE      = "/com/ensias/dao/envDB.properties";
+    private static final String PROPERTIES_FILE      = "/com/JOffre/dao//envDB.properties";
     private static final String PROPERTY_URL         = "URL";
     private static final String PROPERTY_DRIVER      = "DRIVER";
     private static final String PROPERTY_USERNAME    = "DBUSER";
