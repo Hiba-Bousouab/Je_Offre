@@ -1,4 +1,5 @@
 package com.JOffre.daoUtil;
+import com.JOffre.Model.Category;
 import com.JOffre.Model.City;
 import com.JOffre.Model.Offre;
 
@@ -58,13 +59,12 @@ public class Util {
     public static Offre mapToOffer(ResultSet resultSet)throws SQLException{
             Offre offer = new Offre();
             offer.setOfferId( resultSet.getLong( "offerId" ) );
-            offer.setTitre( resultSet.getString("title"));
-            offer.setIdUser( resultSet.getString("idUser"));
-            offer.setDescription(resultSet.getString("description"));
-            resultSet.getInt("city");
-            offer.setCity(City.CASA);
-            offer.setCity(resultSet.getObject("category"));
-            offer.setCity(resultSet.getObject("date"));
+            offer.setTitre( resultSet.getString("title") );
+            offer.setIdUser( resultSet.getString("idUser") );
+            offer.setDescription( resultSet.getString("description") );
+            offer.setCity( intToCity( resultSet.getInt("city") ) );
+            offer.setCategory( intToCategory( resultSet.getInt("category") ) );
+            offer.setDate( resultSet.getTimestamp("date"));
 
             /*
 
@@ -75,5 +75,15 @@ public class Util {
 
             return offer;
     }
+
+    //conversion between Integer and enum City
+    public static Integer cityToInt(City city){ return city.ordinal();}
+
+    public static City intToCity(Integer n){return City.values()[n];}
+
+    //conversion between Integer and enum City
+    public static Integer categoryToInt(Category category){ return category.ordinal();}
+
+    public static Category intToCategory(Integer n){return Category.values()[n];}
 }
 

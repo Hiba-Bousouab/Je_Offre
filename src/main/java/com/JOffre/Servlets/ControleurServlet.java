@@ -29,15 +29,6 @@ public class ControleurServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String Titre = req.getParameter("Titre");
-        String Description = req.getParameter("Description");
-        int Date = Integer.parseInt(req.getParameter("Date"));
-        Offre model = new Offre();
-        model.setTitre(Titre);
-        model.setDescription(Description);
-        model.setDate(Date);
 
-        req.setAttribute("mod",model);
-        req.getRequestDispatcher("Vue.jsp").forward(req,resp);
     }
 }
