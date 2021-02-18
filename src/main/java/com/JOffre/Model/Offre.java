@@ -110,6 +110,6 @@ public class Offre implements Serializable {
     }
 
 
-
-
+    public Object getDesignation() {
+    }
 }
