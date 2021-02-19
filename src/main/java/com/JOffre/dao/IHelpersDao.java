@@ -6,5 +6,5 @@ package com.JOffre.dao;
 
 //not yet implemented
 public interface IHelpersDao {
-    String[] getImages(Long offerId);
+    //String[] getImages(Long offerId);
 }

@@ -1,8 +1,5 @@
 package com.JOffre.daoUtil;
-import com.JOffre.Model.Category;
-import com.JOffre.Model.City;
-import com.JOffre.Model.Offre;
-import com.JOffre.Model.User;
+import com.JOffre.Model.*;
 import com.JOffre.dao.IHelpersDao;
 
 
@@ -86,6 +83,13 @@ public class Util {
     private Offre[] favorites;
          */
         return user;
+    }
+    public static Image mapToImage(ResultSet resultSet) throws SQLException{
+        Image image = new Image();
+        image.setImageId( resultSet.getLong("imageId") );
+        image.setOfferId( resultSet.getString("offerId") );
+        image.setPathToImage( resultSet.getString("pathToImage") );
+        return image;
     }
 
     //conversion between Integer and enum City
