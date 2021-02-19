@@ -19,10 +19,13 @@ public class OffreDaoImpl implements IOffreDao{
     private static final String SQL_UPDATE = "UPDATE offer set title  = ?, description = ?, city = ?, category = ?  where offerId = ? ";
     private static final String SQL_DELETE = "DELETE from offer where offerId = ? ";
 
-    private static final String SQL_SELECT_BY_CITY = "SELECT offerId, idUser, title, description, date, city, category from offer where city = ? ";
-    private static final String SQL_SELECT_BY_CATEGORY = "SELECT offerId, idUser, title, description, date, city, category from offer where category = ? ";
+    private static final String SQL_SELECT_BY_CITY          = "SELECT offerId, idUser, title, description, date, city, category from offer where city = ? ";
+    private static final String SQL_SELECT_BY_CATEGORY      = "SELECT offerId, idUser, title, description, date, city, category from offer where category = ? ";
     private static final String SQL_SELECT_BY_CITY_CATEGORY = "SELECT offerId, idUser, title, description, date, city, category from offer where city = ? and category = ?";
-    private static final String SQL_SELECT_BY_SEARCH = "SELECT offerId, idUser, title, description, date, city, category from offer WHERE title like '%?%' ";
+    private static final String SQL_SELECT_BY_SEARCH        = "SELECT offerId, idUser, title, description, date, city, category from offer WHERE title like '%?%' ";
+
+    private static final String SQL_SELECT_FAVORITES        = "SELECT off.offerId, off.idUser, title, description, date, city, category from offer off JOIN favoritize fav ON fav.offerId = off.offerId WHERE fav.idUser = ? ";
+    private static final String SQL_SELECT_MY_OFFERS        = "SELECT offerId, idUser, title, description, date, city, category from offer WHERE idUser = ? ";
 
     private DaoFactory       daoFactory;
     Connection connection               = null;
@@ -73,7 +76,7 @@ public class OffreDaoImpl implements IOffreDao{
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             if ( resultSet.next() ) {
-                offer = mapToOffer(resultSet);
+                offer = mapToOffer_withUserName(resultSet);
             }
 
         } catch(SQLException e){
@@ -136,7 +139,7 @@ public class OffreDaoImpl implements IOffreDao{
             resultSet = preparedStatement.executeQuery();
 
             while ( resultSet.next() ) {
-                offers.add( mapToOffer(resultSet) );
+                offers.add( mapToOffer_withNoUserName(resultSet) );
             }
 
         } catch(SQLException e){
@@ -159,7 +162,7 @@ public class OffreDaoImpl implements IOffreDao{
             resultSet = preparedStatement.executeQuery();
 
             while ( resultSet.next() ) {
-                offers.add( mapToOffer(resultSet) );
+                offers.add( mapToOffer_withNoUserName(resultSet) );
             }
 
         } catch(SQLException e){
@@ -182,7 +185,7 @@ public class OffreDaoImpl implements IOffreDao{
             resultSet = preparedStatement.executeQuery();
 
             while ( resultSet.next() ) {
-                offers.add( mapToOffer(resultSet) );
+                offers.add( mapToOffer_withNoUserName(resultSet) );
             }
 
         } catch(SQLException e){
@@ -205,7 +208,7 @@ public class OffreDaoImpl implements IOffreDao{
             resultSet = preparedStatement.executeQuery();
 
             while ( resultSet.next() ) {
-                offers.add( mapToOffer(resultSet) );
+                offers.add( mapToOffer_withNoUserName(resultSet) );
             }
 
         } catch(SQLException e){
@@ -217,5 +220,49 @@ public class OffreDaoImpl implements IOffreDao{
         return offers;
     }
 
+    @Override
+    public List<Offre> getFavorites(String idUser) throws DaoException {
+        List<Offre> offers = new ArrayList<>();
+        ResultSet resultSet = null;
 
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_SELECT_FAVORITES, false, idUser );
+            resultSet = preparedStatement.executeQuery();
+
+            while ( resultSet.next() ) {
+                offers.add( mapToOffer_withNoUserName(resultSet) );
+            }
+
+        } catch(SQLException e){
+            throw new DaoException(e);
+        }
+        finally {
+            closeResources( resultSet, preparedStatement, connection );
+        }
+        return offers;
+    }
+
+    @Override
+    public List<Offre> getMyOffers(String idUser) throws DaoException {
+        List<Offre> offers = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_SELECT_MY_OFFERS, false, idUser );
+            resultSet = preparedStatement.executeQuery();
+
+            while ( resultSet.next() ) {
+                offers.add( mapToOffer_withNoUserName(resultSet) );
+            }
+
+        } catch(SQLException e){
+            throw new DaoException(e);
+        }
+        finally {
+            closeResources( resultSet, preparedStatement, connection );
+        }
+        return offers;
+    }
 }

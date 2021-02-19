@@ -55,7 +55,7 @@ public class Util {
         closeResources( statement );
         closeResources( connexion );
     }
-    public static Offre mapToOffer(ResultSet resultSet)throws SQLException{
+    public static Offre mapToOffer_withUserName(ResultSet resultSet)throws SQLException{
             Offre offer = new Offre();
             offer.setOfferId( resultSet.getLong( "offerId" ) );
             offer.setTitre( resultSet.getString("title") );
@@ -71,17 +71,26 @@ public class Util {
             score;*/
             return offer;
     }
+    public static Offre mapToOffer_withNoUserName(ResultSet resultSet)throws SQLException{
+        Offre offer = new Offre();
+        offer.setOfferId( resultSet.getLong( "offerId" ) );
+        offer.setTitre( resultSet.getString("title") );
+        offer.setIdUser( resultSet.getString("idUser") );
+        offer.setDescription( resultSet.getString("description") );
+        offer.setCity( intToCity( resultSet.getInt("city") ) );
+        offer.setCategory( intToCategory( resultSet.getInt("category") ) );
+        offer.setDate( resultSet.getTimestamp("date") );
+            /*
+            photos
+            score;*/
+        return offer;
+    }
 
     public static User mapToUser(ResultSet resultSet)throws SQLException{
         User user = new User();
         user.setIdUser( resultSet.getString("idUser") );
         user.setFirstName( resultSet.getString("firstName") );
         user.setLastName( resultSet.getString("lastName") );
-
-        /*
-    private Offre[] offers;
-    private Offre[] favorites;
-         */
         return user;
     }
     public static Image mapToImage(ResultSet resultSet) throws SQLException{
