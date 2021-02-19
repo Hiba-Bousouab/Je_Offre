@@ -7,15 +7,18 @@ public class User implements Serializable {
     private String idUser;
     private String firstName;
     private String lastName;
-    private Long[] offres;
+    private Offre[] offers;
+    private Offre[] favorites;
 
-    public Long[] getOffres() {
-        return offres;
+    public Offre[] getFavorites() { return favorites; }
+
+    public void setFavorites(Offre[] favorites) { this.favorites = favorites; }
+
+    public Offre[] getOffres() {
+        return offers;
     }
 
-    public void setOffres(Long[] offres) {
-        this.offres = offres;
-    }
+    public void setOffres(Offre[] offers) { this.offers = offers; }
 
     public String getIdUser() {
         return idUser;
