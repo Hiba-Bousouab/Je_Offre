@@ -2,6 +2,7 @@ package com.JOffre.Model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Offre implements Serializable {
 
@@ -11,7 +12,7 @@ public class Offre implements Serializable {
     private String description;
     private City city;
     private Category category;
-    private String[] photos ;
+    private List<Image> photos ;
     private String idUser;
     private String userFirstName;
     private String userLastName;
@@ -45,11 +46,11 @@ public class Offre implements Serializable {
         this.score = score;
     }
 
-    public String[] getPhotos() {
+    public List<Image> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(String[] photos) {
+    public void setPhotos(List<Image> photos) {
         this.photos = photos;
     }
 

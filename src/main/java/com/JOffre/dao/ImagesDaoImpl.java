@@ -13,7 +13,7 @@ import java.util.List;
 import static com.JOffre.daoUtil.Util.*;
 import static com.JOffre.daoUtil.Util.closeResources;
 
-public class IImagesDaoImpl implements IImagesDao {
+public class ImagesDaoImpl implements IImagesDao {
 
     private static final String SQL_INSERT = "INSERT INTO Images(offerId, pathToImage) VALUES(?, ?)";
     private static final String SQL_SELECT = "SELECT imageId, offerId , pathToImage from Images where imageId = ? ";
@@ -25,7 +25,7 @@ public class IImagesDaoImpl implements IImagesDao {
     Connection connection               = null;
     PreparedStatement preparedStatement = null;
 
-    public IImagesDaoImpl(DaoFactory factory){ this.daoFactory = factory; }
+    public ImagesDaoImpl(DaoFactory factory){ this.daoFactory = factory; }
 
     @Override
     public Image create(Image image) throws DaoException {

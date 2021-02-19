@@ -1,24 +1,25 @@
 package com.JOffre.Model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
 
     private String idUser;
     private String firstName;
     private String lastName;
-    private Offre[] offers ;
-    private Offre[] favorites ;
+    private List<Offre> offers ;
+    private List<Offre> favorites ;
 
-    public Offre[] getFavorites() { return favorites; }
+    public List<Offre> getFavorites() { return favorites; }
 
-    public void setFavorites(Offre[] favorites) { this.favorites = favorites; }
+    public void setFavorites(List<Offre> favorites) { this.favorites = favorites; }
 
-    public Offre[] getOffres() {
+    public List<Offre> getOffres() {
         return offers;
     }
 
-    public void setOffres(Offre[] offers) { this.offers = offers; }
+    public void setOffres(List<Offre> offers) { this.offers = offers; }
 
     public String getIdUser() {
         return idUser;

@@ -1,6 +1,5 @@
 package com.JOffre.dao;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -70,6 +69,7 @@ public class DaoFactory {
         return new OffreDaoImpl(this);
     }
     public IUserDao getUserDao() { return new UserDaoImpl(this); }
+    public IImagesDao getImagesDao() { return new ImagesDaoImpl(this); }
 
 
 }
