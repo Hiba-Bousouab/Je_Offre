@@ -9,17 +9,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OffreDaoImpl implements IOffreDao{
 
     private static final String SQL_INSERT = "INSERT INTO offer(idUser, title, description, date, city, category) VALUES(?,?,?,?,?,?)";
-    private static final String SQL_SELECT = "SELECT offerId, idUser, title, description, date, city, category from offer where offerId = ? ";
+    private static final String SQL_SELECT = "SELECT offerId, offer.idUser, title, description, date, city, category, firstName, lastName from offer JOIN user on user.idUser = offer.idUser where offerId = ? ";
     private static final String SQL_UPDATE = "UPDATE offer set title  = ?, description = ?, city = ?, category = ?  where offerId = ? ";
     private static final String SQL_DELETE = "DELETE from offer where offerId = ? ";
 
-    private DaoFactory          daoFactory;
-    Connection connection= null;
+    private static final String SQL_SELECT_BY_CITY = "SELECT offerId, idUser, title, description, date, city, category from offer where city = ? ";
+    private static final String SQL_SELECT_BY_CATEGORY = "SELECT offerId, idUser, title, description, date, city, category from offer where category = ? ";
+    private static final String SQL_SELECT_BY_CITY_CATEGORY = "SELECT offerId, idUser, title, description, date, city, category from offer where city = ? and category = ?";
+    private static final String SQL_SELECT_BY_SEARCH = "SELECT offerId, idUser, title, description, date, city, category from offer WHERE title like '%?%' ";
+
+    private DaoFactory       daoFactory;
+    Connection connection               = null;
     PreparedStatement preparedStatement = null;
 
 
@@ -85,7 +91,7 @@ public class OffreDaoImpl implements IOffreDao{
     public Offre update(Offre offer) throws DaoException {
         try {
             connection = daoFactory.getConnection();
-            preparedStatement = initPreparedStatement( connection, SQL_UPDATE, true, offer.getTitre(), offer.getDescription(), offer.getCity(), offer.getCategory());
+            preparedStatement = initPreparedStatement( connection, SQL_UPDATE, true, offer.getTitre(), offer.getDescription(), offer.getCity(), offer.getCategory(), offer.getOfferId());
 
             int status = preparedStatement.executeUpdate();
             if ( status == 0 ) {
@@ -121,22 +127,94 @@ public class OffreDaoImpl implements IOffreDao{
 
     @Override
     public List<Offre> getOffres(City city) throws DaoException {
-        return null;
+        List<Offre> offers = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_SELECT_BY_CITY, false, cityToInt(city) );
+            resultSet = preparedStatement.executeQuery();
+
+            while ( resultSet.next() ) {
+                offers.add( mapToOffer(resultSet) );
+            }
+
+        } catch(SQLException e){
+            throw new DaoException(e);
+        }
+        finally {
+            closeResources( resultSet, preparedStatement, connection );
+        }
+        return offers;
     }
 
     @Override
-    public List<Offre> getOffres(int category) throws DaoException {
-        return null;
+    public List<Offre> getOffres(Category category) throws DaoException {
+        List<Offre> offers = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_SELECT_BY_CATEGORY, false, categoryToInt(category) );
+            resultSet = preparedStatement.executeQuery();
+
+            while ( resultSet.next() ) {
+                offers.add( mapToOffer(resultSet) );
+            }
+
+        } catch(SQLException e){
+            throw new DaoException(e);
+        }
+        finally {
+            closeResources( resultSet, preparedStatement, connection );
+        }
+        return offers;
     }
 
     @Override
     public List<Offre> getOffres(City city, Category category) throws DaoException {
-        return null;
+        List<Offre> offers = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_SELECT_BY_CITY_CATEGORY, false, cityToInt(city), categoryToInt(category) );
+            resultSet = preparedStatement.executeQuery();
+
+            while ( resultSet.next() ) {
+                offers.add( mapToOffer(resultSet) );
+            }
+
+        } catch(SQLException e){
+            throw new DaoException(e);
+        }
+        finally {
+            closeResources( resultSet, preparedStatement, connection );
+        }
+        return offers;
     }
 
     @Override
     public List<Offre> searchOffers(String str) throws DaoException {
-        return null;
+        List<Offre> offers = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initPreparedStatement( connection, SQL_SELECT_BY_SEARCH, false, str );
+            resultSet = preparedStatement.executeQuery();
+
+            while ( resultSet.next() ) {
+                offers.add( mapToOffer(resultSet) );
+            }
+
+        } catch(SQLException e){
+            throw new DaoException(e);
+        }
+        finally {
+            closeResources( resultSet, preparedStatement, connection );
+        }
+        return offers;
     }
 
 

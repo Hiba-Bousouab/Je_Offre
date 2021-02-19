@@ -7,8 +7,8 @@ public class User implements Serializable {
     private String idUser;
     private String firstName;
     private String lastName;
-    private Offre[] offers;
-    private Offre[] favorites;
+    private Offre[] offers ;
+    private Offre[] favorites ;
 
     public Offre[] getFavorites() { return favorites; }
 

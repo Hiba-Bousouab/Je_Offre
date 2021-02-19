@@ -1,8 +1,13 @@
 package com.JOffre.Model;
 
 public enum Category {
-    Furniture,
+    ALL,
+    FURNITURE,
     CLOTHS,
     ELECTRONICS,
+    TOOLS,
+    SPORT,
+    OTHERS
+
 
 }

@@ -2,6 +2,8 @@ package com.JOffre.daoUtil;
 import com.JOffre.Model.Category;
 import com.JOffre.Model.City;
 import com.JOffre.Model.Offre;
+import com.JOffre.Model.User;
+import com.JOffre.dao.IHelpersDao;
 
 
 import java.sql.*;
@@ -64,16 +66,26 @@ public class Util {
             offer.setDescription( resultSet.getString("description") );
             offer.setCity( intToCity( resultSet.getInt("city") ) );
             offer.setCategory( intToCategory( resultSet.getInt("category") ) );
-            offer.setDate( resultSet.getTimestamp("date"));
-
+            offer.setDate( resultSet.getTimestamp("date") );
+            offer.setUserFirstName( resultSet.getString("firstName") );
+            offer.setUserLastName( resultSet.getString("lastName") );
             /*
-
-    private String[] photos;
-    private String userFirstName;
-    private String userLastName;
-    private Integer score;*/
-
+            photos
+            score;*/
             return offer;
+    }
+
+    public static User mapToUser(ResultSet resultSet)throws SQLException{
+        User user = new User();
+        user.setIdUser( resultSet.getString("idUser") );
+        user.setFirstName( resultSet.getString("firstName") );
+        user.setLastName( resultSet.getString("lastName") );
+
+        /*
+    private Offre[] offers;
+    private Offre[] favorites;
+         */
+        return user;
     }
 
     //conversion between Integer and enum City
