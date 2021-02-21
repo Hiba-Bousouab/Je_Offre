@@ -1,6 +1,5 @@
 package com.JOffre.daoUtil;
 import com.JOffre.Model.*;
-import com.JOffre.dao.IHelpersDao;
 
 
 import java.sql.*;

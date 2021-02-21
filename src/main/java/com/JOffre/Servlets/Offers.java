@@ -26,7 +26,7 @@ public class Offers extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Offre> offers = this.offers.searchOffers("car");
+        List<Offre> offers = this.offers.getOffres(City.RABAT);
 
         request.setAttribute(ATT_OFFERS, offers);
         this.getServletContext().getRequestDispatcher( VIEW ).forward( request, response );
