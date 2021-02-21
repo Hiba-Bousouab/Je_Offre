@@ -12,7 +12,7 @@ public class Offre implements Serializable {
     private String description;
     private City city;
     private Category category;
-    private List<Image> photos ;
+    private List<Image> photos;
     private String idUser;
     private String userFirstName;
     private String userLastName;

@@ -15,7 +15,8 @@ import java.util.List;
 public class Offers extends HttpServlet {
     private static final String ATT_DAO_FACTORY = "daofactory";
     private static final String ATT_OFFERS      = "offers";
-    private IOffreDao offers = null;
+    private static final String VIEW            = "/WEB-INF/offers.jsp";
+    private IOffreDao offers                    = null;
 
     @Override
     public void init() throws ServletException{
@@ -28,7 +29,7 @@ public class Offers extends HttpServlet {
         List<Offre> offers = this.offers.searchOffers("car");
 
         request.setAttribute(ATT_OFFERS, offers);
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/offers.jsp" ).forward( request, response );
+        this.getServletContext().getRequestDispatcher( VIEW ).forward( request, response );
 
     }
 
