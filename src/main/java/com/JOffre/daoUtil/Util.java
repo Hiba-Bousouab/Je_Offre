@@ -95,7 +95,7 @@ public class Util {
     public static Image mapToImage(ResultSet resultSet) throws SQLException{
         Image image = new Image();
         image.setImageId( resultSet.getLong("imageId") );
-        image.setOfferId( resultSet.getString("offerId") );
+        image.setOfferId( resultSet.getLong("offerId") );
         image.setPathToImage( resultSet.getString("pathToImage") );
         return image;
     }

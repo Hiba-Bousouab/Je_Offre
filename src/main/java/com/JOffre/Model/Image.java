@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Image implements Serializable {
     private Long   imageId;
-    private String offerId;
+    private Long   offerId;
     private String pathToImage;
 
     public Long getImageId() {
@@ -15,11 +15,11 @@ public class Image implements Serializable {
         this.imageId = imageId;
     }
 
-    public String getOfferId() {
+    public Long getOfferId() {
         return offerId;
     }
 
-    public void setOfferId(String offerId) {
+    public void setOfferId(Long offerId) {
         this.offerId = offerId;
     }
 

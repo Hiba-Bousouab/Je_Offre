@@ -60,8 +60,9 @@
         <fieldset>
             <legend>Envoi de fichier</legend>
 
-            <label for="title">titre d'offre</label>
-            <input type="text" id="title" name="title" value="<c:out value="${title}" />" />
+            <label for="title">Titre d'offre</label>
+            <input type="text" id="title" name="title" value="<c:out value="${offer.title}" />" />
+            <span class="erreur">${form.erreurs['title']}</span>
             <br />
 
             <label for="description">Description d'offre</label>
@@ -70,11 +71,21 @@
             <br />
 
             <label for="city">Ville d'offre</label>
-            <input type="text" id="city" name="city" value="<c:out value="${offer.city}" />" />
+            <select id="city" name="city" value="<c:out value="${offer.city}" />">
+                <c:forEach var="ville" items="${City}">
+                    <option value="${ville}">${ville}</option>
+                </c:forEach>
+            </select>
+            <span class="erreur">${form.erreurs['city']}</span>
             <br />
 
             <label for="category">Catégorie</label>
-            <input type="text" id="category" name="category" value="<c:out value="${offer.category}" />" />
+            <select id="category" name="category" value="<c:out value="${offer.category}" />">
+                <c:forEach var="category" items="${Category}">
+                    <option value="${category}">${category}</option>
+                </c:forEach>
+            </select>
+            <span class="erreur">${form.erreurs['category']}</span>
             <br />
 
             <label for="file">Emplacement du fichier <span class="required">*</span></label>
@@ -82,7 +93,7 @@
             <span class="erreur">${form.erreurs['file']}</span>
             <br />
 
-            <input type="submit" value="Envoyer" class="sansLabel" />
+            <input type="submit" value="publier" class="sansLabel" />
             <br />
         </fieldset>
 </form>

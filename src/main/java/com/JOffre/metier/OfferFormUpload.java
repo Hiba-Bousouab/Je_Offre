@@ -7,12 +7,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-import javax.swing.*;
 
+import com.JOffre.Model.Category;
+import com.JOffre.Model.City;
 import com.JOffre.Model.Image;
 import com.JOffre.Model.Offre;
 
@@ -25,8 +27,12 @@ public class OfferFormUpload {
     //still need to handle userId
 
     public static final int BUFFER_SIZE           = 10240; // 10 ko
+    public static final int RANDOM_FILENAME_LEN   = 30;
     private String              result;
     private Map<String, String> errors            = new HashMap<String, String>();
+
+    private Offre offer = new Offre();
+    private Image image = new Image();
 
     public String getResult() {
         return result;
@@ -35,17 +41,20 @@ public class OfferFormUpload {
         return errors;
     }
 
+    public Image getImage() { return image; }
+    public void setImage(Image image) { this.image = image; }
+    public Offre getOffer() { return offer; }
+    public void setOffer(Offre offer) { this.offer = offer; }
+
     public Offre storeOffer( HttpServletRequest request, String path ) {
-        //getting the offer and image beans
-        Offre offer = new Offre();
-        Image image = new Image();
 
         //getting the inputs of non file fields
         String description = getFieldValue( request, FIELD_DESCRIPTION );
         String title       = getFieldValue( request, FIELD_TITLE );
-        String category    = getFieldValue( request, FIELD_CATEGORY );
-        String city        = getFieldValue( request, FIELD_CITY );
+        Category category  = Category.valueOf( getFieldValue( request, FIELD_CATEGORY ) );
+        City   city        = City.valueOf( getFieldValue( request, FIELD_CITY ) );
 
+        //need userId and images
 
 
         //getting the file field using getPart
@@ -60,16 +69,14 @@ public class OfferFormUpload {
 
             //if fileName isn't null it is really a type=file field
             if ( fileName != null && !fileName.isEmpty() ) {
-                String fieldName = part.getName();
 
                 //extract fileName with no '\'  example C:\\dossier\img.jpg become img.jpg
                 fileName = fileName.substring( fileName.lastIndexOf( '/' ) + 1 )
                         .substring( fileName.lastIndexOf( '\\' ) + 1 );
 
-                store_file(fileContent, fileName, path);
-
                 //getting the file's content
                 fileContent = part.getInputStream();
+
 
             }
         } catch ( IllegalStateException e ) {
@@ -92,13 +99,21 @@ public class OfferFormUpload {
             } catch ( Exception e ) {
                 setError( FIELD_DESCRIPTION, e.getMessage() );
             }
-            offer.setDescription( description );
-
             try {
-                validateFile( fileName, fileContent );
+                validateTitle( title );
             } catch ( Exception e ) {
-                setError( FIELD_FILE, e.getMessage() );
+                setError( FIELD_TITLE, e.getMessage() );
             }
+            offer.setDescription( description );
+            offer.setTitre(title);
+            offer.setCategory(category);
+            offer.setCity(city);
+
+//            try {
+//                validateFile( fileName, fileContent );
+//            } catch ( Exception e ) {
+//                setError( FIELD_FILE, e.getMessage() );
+//            }
             image.setPathToImage( fileName );
         }
         //if no error lets now store our file in the hard disk
@@ -128,6 +143,16 @@ public class OfferFormUpload {
             }
         } else {
             throw new Exception( "Please enter a description" );
+        }
+    }
+    //validate field title
+    private void validateTitle( String title ) throws Exception {
+        if ( title != null ) {
+            if ( title.length() < 5 ) {
+                throw new Exception( "title is too short please use a longer title" );
+            }
+        } else {
+            throw new Exception( "Please enter a title" );
         }
     }
 
@@ -180,7 +205,7 @@ public class OfferFormUpload {
             //open the streams
             in = new BufferedInputStream( fileContent, BUFFER_SIZE );
 
-            out = new BufferedOutputStream( new FileOutputStream( new File( path + fileName ) ), BUFFER_SIZE );
+            out = new BufferedOutputStream( new FileOutputStream( new File( path + random_java8_string(RANDOM_FILENAME_LEN) ) ), BUFFER_SIZE );
 
             byte[] buffer = new byte[BUFFER_SIZE];
             int length;
@@ -200,4 +225,18 @@ public class OfferFormUpload {
     }
 
 
+    public String random_java8_string(int len) {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = len;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString;
+    }
 }

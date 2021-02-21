@@ -1,6 +1,7 @@
 package com.JOffre.Model;
 
 public enum City {
+    ALL,
     RABAT,
     CASABLANCA,
     MARRAKESH,

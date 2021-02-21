@@ -49,7 +49,7 @@ create table Offer
    idUser               varchar(254),
    title                varchar(254),
    description          varchar(254),
-   date                 timestamp,
+   date                 timestamp DEFAULT CURRENT_TIMESTAMP ,
    city                 smallint,
    category             smallint,
    primary key (offerId)
