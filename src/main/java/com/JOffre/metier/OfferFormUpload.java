@@ -49,8 +49,8 @@ public class OfferFormUpload {
     public Offre storeOffer( HttpServletRequest request, String path ) {
 
         //getting the inputs of non file fields
-        String description = request.getParameter(FIELD_DESCRIPTION);//getFieldValue( request, FIELD_DESCRIPTION );
-        String title       = request.getParameter(FIELD_TITLE);// getFieldValue( request, FIELD_TITLE );
+        String description = getFieldValue( request, FIELD_DESCRIPTION );
+        String title       = getFieldValue( request, FIELD_TITLE );
         //String c = getFieldValue( request, FIELD_CATEGORY ),cc =getFieldValue( request, FIELD_CITY );
 
         /*
