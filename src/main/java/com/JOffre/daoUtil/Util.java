@@ -100,6 +100,16 @@ public class Util {
         return image;
     }
 
+    public static Message mapToMessage(ResultSet resultSet) throws SQLException{
+        Message message = new Message();
+        message.setMessage( resultSet.getString("message") );
+        message.setMessageId( resultSet.getLong("id_message") );
+        message.setReceiverId( resultSet.getString("idUser") );
+        message.setSenderId( resultSet.getString("sender_id_user") );
+        message.setDateMessage( resultSet.getTimestamp("dateMessage") );
+        return message;
+    }
+
     //conversion between Integer and enum City
     public static Integer cityToInt(City city){ if(city!=null) return city.ordinal(); else return 0;}
 

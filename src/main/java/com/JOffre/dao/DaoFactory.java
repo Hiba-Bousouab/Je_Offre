@@ -71,6 +71,7 @@ public class DaoFactory {
     public IUserDao getUserDao() { return new UserDaoImpl(this); }
     public IImagesDao getImagesDao() { return new ImagesDaoImpl(this); }
     public IScoreDao getScoreDao() { return new ScoreDaoImpl(this); }
+    public IMessageDao getMessageDao() { return new MessageDaoImpl(this); }
 
 
 }

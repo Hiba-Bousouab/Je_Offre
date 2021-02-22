@@ -10,6 +10,7 @@ public class User implements Serializable {
     private String lastName;
     private List<Offre> offers ;
     private List<Offre> favorites ;
+    private List<Message> messages;
 
     public List<Offre> getFavorites() { return favorites; }
 
