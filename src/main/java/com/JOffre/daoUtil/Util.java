@@ -101,12 +101,12 @@ public class Util {
     }
 
     //conversion between Integer and enum City
-    public static Integer cityToInt(City city){ return city.ordinal();}
+    public static Integer cityToInt(City city){ if(city!=null) return city.ordinal(); else return 0;}
 
     public static City intToCity(Integer n){return City.values()[n];}
 
     //conversion between Integer and enum City
-    public static Integer categoryToInt(Category category){ return category.ordinal();}
+    public static Integer categoryToInt(Category category){ if(category!=null) return category.ordinal();else return 0; }
 
     public static Category intToCategory(Integer n){return Category.values()[n];}
 }

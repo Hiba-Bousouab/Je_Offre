@@ -49,10 +49,16 @@ public class OfferFormUpload {
     public Offre storeOffer( HttpServletRequest request, String path ) {
 
         //getting the inputs of non file fields
-        String description = getFieldValue( request, FIELD_DESCRIPTION );
-        String title       = getFieldValue( request, FIELD_TITLE );
-        Category category  = Category.valueOf( getFieldValue( request, FIELD_CATEGORY ) );
-        City   city        = City.valueOf( getFieldValue( request, FIELD_CITY ) );
+        String description = request.getParameter(FIELD_DESCRIPTION);//getFieldValue( request, FIELD_DESCRIPTION );
+        String title       = request.getParameter(FIELD_TITLE);// getFieldValue( request, FIELD_TITLE );
+        //String c = getFieldValue( request, FIELD_CATEGORY ),cc =getFieldValue( request, FIELD_CITY );
+
+        /*
+            Category category  = Category.valueOf( c );
+            City   city        = City.valueOf(  cc);
+            offer.setCategory(category);
+            offer.setCity(city);
+*/
 
         //need userId and images
 
@@ -106,8 +112,8 @@ public class OfferFormUpload {
             }
             offer.setDescription( description );
             offer.setTitre(title);
-            offer.setCategory(category);
-            offer.setCity(city);
+
+
 
 //            try {
 //                validateFile( fileName, fileContent );
@@ -239,4 +245,7 @@ public class OfferFormUpload {
 
         return generatedString;
     }
+
+
+
 }
