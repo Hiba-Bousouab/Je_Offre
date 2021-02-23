@@ -1,16 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>J'Offre</title>
     <link href="css/chat.css" rel="stylesheet">
     <%@ include file="bootstrapIncludes.jsp" %>
 
 </head>
 <body>
-<script src="js/chat.js"></script>
 
 
-<a href="#" id="addClass"> Open chat </a>
+<a href="#" id="addClass"> Open chat now </a>
 
 
 
@@ -127,8 +128,7 @@
 
 
 
-
-
+<%@ include file="bootstrapIncludeLast.jsp" %>
 
 </body>
 </html>
