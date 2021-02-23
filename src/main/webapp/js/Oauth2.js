@@ -2,7 +2,7 @@ function statusChangeCallback(response) {  // Called with the results from FB.ge
     if (response.status === 'connected') {   // Logged into your webpage and Facebook.
         usingAPI();
     } else {                                 // Not logged into your webpage or we are unable to tell.
-        document.getElementById('status').innerHTML = 'Please log ' + 'In.';
+        document.getElementById('username').innerHTML = 'Please log ' + 'In.';
     }
 }
 
@@ -28,10 +28,8 @@ window.fbAsyncInit = function() {
 
 function usingAPI() {  // now connection is set we use the api to fetch data
     FB.api('/me', function(response) {
-        console.log(response.name);
-        console.log(response.id);
-        document.getElementById('status').innerHTML =
-            'Thanks for logging in, ' + response.name + '!';
-        console.log(response);
+        document.getElementById('name').innerHTML = response.name;
+        document.getElementById('username').value = response.name;
+        document.getElementById('idUser').value = response.id;
     });
 }

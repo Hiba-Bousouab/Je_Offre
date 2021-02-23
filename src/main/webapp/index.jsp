@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>J'Offre</title>
-    <link href="css/index.css" rel="stylesheet" >
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" >
+    <%@ include file="WEB-INF/bootstrapIncludes.jsp" %>
+
 
 </head>
 <body style="background-color: #a598ee;text-align:center">
@@ -30,9 +29,11 @@
                 </div>
                 <div class="row categories">
                                 <div class="col-md-4 card">
-                                    <div class="card-inner p-3 d-flex flex-column align-items-center"> <img src="https://i.imgur.com/Mb8kaPV.png" width="50">
-                                        <div class="text-center mg-text"> <span class="mg-text">Account</span> </div>
-                                    </div>
+                                    <a href="offers">
+                                        <div class="card-inner p-3 d-flex flex-column align-items-center"> <img src="https://i.imgur.com/Mb8kaPV.png" width="50">
+                                            <div class="text-center mg-text"> <span class="mg-text">Account</span> </div>
+                                        </div>
+                                    </a>
                                 </div>
                                 <div class="col-md-4 card">
                                     <div class="card-inner p-3 d-flex flex-column align-items-center"> <img src="https://i.imgur.com/ueLEPGq.png" width="50">

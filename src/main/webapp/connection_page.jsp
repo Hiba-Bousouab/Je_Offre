@@ -11,7 +11,7 @@
 <script src="js/Oauth2.js"></script>
 <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default"
      data-auto-logout-link="false" data-use-continue-as="true" onLogin="checkLoginState()"></div>
-<div id="status"> </div>
+
 
 </body>
 </html>
