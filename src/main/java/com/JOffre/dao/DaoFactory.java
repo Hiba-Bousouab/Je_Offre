@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class DaoFactory {
     //properties file constants keys (envDB is key value file)
-    private static final String PROPERTIES_FILE      = "/com/JOffre/dao//envDB.properties";
+    private static final String PROPERTIES_FILE      = "/com/JOffre/dao/envDB.properties";
     private static final String PROPERTY_URL         = "URL";
     private static final String PROPERTY_DRIVER      = "DRIVER";
     private static final String PROPERTY_USERNAME    = "DBUSER";
@@ -32,6 +32,7 @@ public class DaoFactory {
         String driver;
         String username;
         String password;
+        /*
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         InputStream propertiesFile = classLoader.getResourceAsStream(PROPERTIES_FILE);
 
@@ -45,9 +46,15 @@ public class DaoFactory {
             driver = properties.getProperty(PROPERTY_DRIVER);
             username = properties.getProperty(PROPERTY_USERNAME);
             password = properties.getProperty(PROPERTY_PASSWORD);
+
         } catch (IOException e) {
             throw new DaoConfigurationException("properties file can't be loaded " + PROPERTIES_FILE, e);
-        }
+        } */
+
+        url = "jdbc:mysql://localhost:3306/joffre";
+        driver = "com.mysql.jdbc.Driver";
+        username = "root";
+        password ="";
 
         try {
             Class.forName(driver);
@@ -72,6 +79,5 @@ public class DaoFactory {
     public IImagesDao getImagesDao() { return new ImagesDaoImpl(this); }
     public IScoreDao getScoreDao() { return new ScoreDaoImpl(this); }
     public IMessageDao getMessageDao() { return new MessageDaoImpl(this); }
-
 
 }
